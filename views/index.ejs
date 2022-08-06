@@ -18,7 +18,7 @@
             Please enter your name <input id="playerName" /> <button id="submitName" type="button">Submit name</button>
         </div>
         <div class="scene" id="scene2">
-            Connecting to other participants / disconnected screen
+            Connecting to other participants
         </div>
         <div class="scene" id="scene3">
             <div class="title">Story: <a id="story" href=""></a></div>
@@ -49,16 +49,6 @@
     <script src="js/game.js"></script>
     <script src="js/app.js"></script>
     <script src="js/index.js"></script>
-
-    <script>
-        let cards = document.getElementsByClassName("flip-card");
-        for (let index = 0; index < cards.length; index++) {
-            const element = cards[index];
-            element.addEventListener('mouseover', (event) => {
-                event.currentTarget.classList.add("flipped");
-            });
-        }
-    </script>
 </body>
 
 </html>

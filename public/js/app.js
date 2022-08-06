@@ -16,7 +16,7 @@ class Application {
         let self = this;
         self.socket = io('/users', { path: baseUrl + 'socket.io' });
 
-        self.socket.on('stateUpdated', (data, b) => {
+        self.socket.on('stateUpdated', (data) => {
             // Set global states
             self.state.players = data.players;
             self.state.selectedCards = data.selectedCards;
