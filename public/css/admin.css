@@ -1,0 +1,63 @@
+body, html {
+    background-color: lightgray;
+}
+textarea {
+    width: 100%;
+}
+
+.container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    margin-bottom: 8px;
+    font-size: large;
+}
+
+.form-group div {
+    width: 20%;
+    display: inline-block;
+    text-align: right;
+    padding: 8px 10px;
+}
+
+.form-group input {
+    width: 80%;
+    padding: 8px 10px;
+    font-size: large;
+}
+.button-row {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+button {
+    font-size: large;
+    padding: 10px 12px;
+    border-radius: 5px;
+    color: white;
+}
+
+.button-row .button-primary {
+    
+    background-color: #00a2ed;
+    border: 1px solid #00a2ed;
+}
+
+.button-row .button-danger {
+    background-color: #ac3714;
+    border: 1px solid #ac3714;
+}
+
+.card-state {
+    text-align: center;
+    font-size: xx-large;
+}
+
+#log {
+    display: none;
+}

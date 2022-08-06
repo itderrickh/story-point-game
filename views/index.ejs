@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Points Game</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/flip-card.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <base href="<%- baseUrl %>" />
+</head>
+
+<body>
+    <main>
+        <div class="scene" id="scene1">
+            Please enter your name <input id="playerName" /> <button id="submitName" type="button">Submit name</button>
+        </div>
+        <div class="scene" id="scene2">
+            Connecting to other participants / disconnected screen
+        </div>
+        <div class="scene" id="scene3">
+            <div class="title">Story: <a id="story" href=""></a></div>
+            <div class="board">
+                <!-- Handled by board code -->
+                <div id="user-board"></div>
+                <div id="board" class="board"></div>
+            </div>
+
+            <div class="hand">
+                <div class="card hoverable card-front selection-card">1</div>
+                <div class="card hoverable card-front selection-card">3</div>
+                <div class="card hoverable card-front selection-card">5</div>
+                <div class="card hoverable card-front selection-card">8</div>
+                <div class="card hoverable card-front selection-card">13</div>
+                <div class="card hoverable card-front selection-card">X</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const baseUrl = '<%- baseUrl %>';
+    </script>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/index.js"></script>
+
+    <script>
+        let cards = document.getElementsByClassName("flip-card");
+        for (let index = 0; index < cards.length; index++) {
+            const element = cards[index];
+            element.addEventListener('mouseover', (event) => {
+                event.currentTarget.classList.add("flipped");
+            });
+        }
+    </script>
+</body>
+
+</html>

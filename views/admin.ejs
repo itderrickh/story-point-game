@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Points Game</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/flip-card.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+    <base href="<%- baseUrl %>" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-group">
+            <div>Story Link</div>
+            <input id="storyLink" value="<%- state.storyLink %>" />
+        </div>
+    
+        <div class="form-group">
+            <div>Story Name</div>
+            <input id="storyName" value="<%- state.storyName %>" />
+        </div>
+
+        <div class="card-state">
+            <h2>Cards are currently: <span id="cardState"><%- !state.cardsFlipped ? 'Hidden' : 'Revealed' %></span></h2>
+        </div>
+
+        <div class="button-row">
+            <button class="button-primary" id="storyUpdate" type="button">Update Story</button>
+            <button class="button-danger" id="flip" type="button">Flip Cards</button>
+        </div>
+
+        <div id="board" class="board">
+            <% for (var u in state.players) { %>
+                <div class="user">
+                    <h2><%- state.players[u].username %>:</h2>
+                    <div class="card card-front"><%- state.selectedCards[u] %></div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    
+    <textarea rows="20" id="log"><%- JSON.stringify(state, null, 4) %></textarea>
+    <script>
+        const baseUrl = '<%- baseUrl %>';
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        function log(state) {
+            document.getElementById("log").textContent = JSON.stringify(state, null, 4);
+        }
+
+        function cardTemplate(user, number) {
+            return `
+            <div class="user">
+                <h2>${user}:</h2>
+                <div class="card card-front selection-card">${number}</div>
+            </div>`;
+        }
+
+        const socket = io('/admin', { path: baseUrl + 'socket.io' });
+        socket.on('stateUpdated', (state) => {
+            log(state);
+            
+            var content = "";
+            for (var u in state.players) {
+                const user = state.players[u];
+                const points = state.selectedCards.hasOwnProperty(u) ? state.selectedCards[u] : 0;
+                content += cardTemplate(user.username, points);
+            }
+
+            document.getElementById("board").innerHTML = content;
+            document.getElementById('cardState').textContent = !state.cardsFlipped ? 'Hidden' : 'Revealed';
+        });
+
+        document.getElementById("flip").addEventListener("click", () => {
+            socket.emit("flip");
+        });
+
+        document.getElementById("storyUpdate").addEventListener("click", () => {
+            var storyLink = document.getElementById("storyLink").value;
+            var storyName = document.getElementById("storyName").value;
+
+            socket.emit("setStoryDetails", {
+                storyLink: storyLink,
+                storyName: storyName
+            });
+        });
+    </script>
+</body>
+
+</html>
